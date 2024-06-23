@@ -3,7 +3,7 @@ import pandas as pd
 import joblib
 
 # Load the trained model
-model = joblib.load(r'c:\users\sbeb\onedrive\desktop\honours\itdaa4-12\itdaa project - old\best_model.pkl')
+model = joblib.load('./best_model.pkl')
 
 # Define the Streamlit app
 def main():
