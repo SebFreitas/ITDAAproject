@@ -1,9 +1,10 @@
 import streamlit as st
 import pandas as pd
-import joblib
+import pickle
 
 # Load the trained model
-model = joblib.load(r'c:\users\sbeb\onedrive\desktop\honours\itdaa4-12\itdaa project - old\best_model.pkl')
+with open('./best_model.pkl', 'rb') as f:
+    model = pickle.load(f)
 
 # Define the Streamlit app
 def main():
@@ -41,8 +42,7 @@ def main():
         'thal': thal
     }
     input_df = pd.DataFrame(input_data, index=[0])
-    print(input_df)
-    
+
     # Preprocess input data
     if sex == 'Male':
         input_df.loc[0, 'sex'] = 1
@@ -91,14 +91,11 @@ def main():
     elif thal == "reversible defect":
         input_df.loc[0, 'thal'] = 3
 
-    print(input_df)
-    input_df = input_df.to_numpy()
+    input_array = input_df.to_numpy()
     
     # Predict and display result
     if st.button('Predict'):
-        print(input_df)
-        prediction = model.predict(input_df)
-        print(prediction)
+        prediction = model.predict(input_array)
         if prediction == 1:
             st.write('The patient is likely to have heart disease.')
         else:
